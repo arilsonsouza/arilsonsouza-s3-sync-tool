@@ -4,10 +4,10 @@ import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
 
 export type Channels =
   | 'ipc-example'
-  | 'aws-exec-s3-ls'
-  | 'aws-exec-s3-ls-stdout'
-  | 'aws-exec-s3-ls-error'
-  | 'aws-exec-s3-ls-close';
+  | 's3-ls'
+  | 's3-ls-stdout'
+  | 's3-ls-error'
+  | 's3-ls-close';
 
 const electronHandler = {
   ipcRenderer: {

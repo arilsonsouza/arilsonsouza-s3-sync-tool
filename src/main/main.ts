@@ -57,8 +57,8 @@ ipcMain.on('ipc-example', async (event, arg) => {
   event.reply('ipc-example', msgTemplate('pong'));
 });
 
-ipcMain.on('aws-exec-s3-ls', async (event, arg) => {
-  execCommand(event, 'aws-exec-s3-ls', 'aws', ['s3', 'ls']);
+ipcMain.on('s3-ls', async (event, arg) => {
+  execCommand(event, 's3-ls', 'aws', ['s3', 'ls']);
 });
 
 if (process.env.NODE_ENV === 'production') {

@@ -12,23 +12,20 @@ export function BucketSelector({ onSelectBucket }: BucketSelectorProps) {
 
   function getBuckets() {
     setLoading(true);
-    window.electron.ipcRenderer.on(
-      'aws-exec-s3-ls-stdout',
-      (bucketInfo: string) => {
-        const [date, hour, name] = bucketInfo.split(' ');
-        const bucket: BucketType = {
-          name: name.replace('\n', ''),
-          dateModified: `${date} ${hour}`,
-        };
+    window.electron.ipcRenderer.on('s3-ls-stdout', (bucketInfo: string) => {
+      const [date, hour, name] = bucketInfo.split(' ');
+      const bucket: BucketType = {
+        name: name.replace('\n', ''),
+        dateModified: `${date} ${hour}`,
+      };
 
-        setBuckets((state) => [...state, bucket]);
-      }
-    );
+      setBuckets((state) => [...state, bucket]);
+    });
 
-    window.electron.ipcRenderer.on('aws-exec-s3-ls-close', () => {
+    window.electron.ipcRenderer.on('s3-ls-close', () => {
       setLoading(false);
     });
-    window.electron.ipcRenderer.sendMessage('aws-exec-s3-ls', []);
+    window.electron.ipcRenderer.sendMessage('s3-ls', []);
   }
 
   useEffect(() => {
