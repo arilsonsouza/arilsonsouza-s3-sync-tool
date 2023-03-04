@@ -9,6 +9,7 @@ module.exports = {
     'import/no-unresolved': 'off',
     'import/no-import-module-exports': 'off',
     'import/prefer-default-export': 'off',
+    'react/jsx-no-bind': 'off',
   },
   parserOptions: {
     ecmaVersion: 2020,

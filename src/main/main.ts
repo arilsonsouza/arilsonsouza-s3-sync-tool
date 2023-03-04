@@ -9,11 +9,13 @@
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
 import path from 'path';
-import { app, BrowserWindow, shell, ipcMain } from 'electron';
+import { app, BrowserWindow, shell, ipcMain, IpcMainEvent } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
+
+const { spawn } = require('child_process');
 
 class AppUpdater {
   constructor() {
@@ -25,10 +27,38 @@ class AppUpdater {
 
 let mainWindow: BrowserWindow | null = null;
 
+const execCommand = (
+  event: IpcMainEvent,
+  channel: string,
+  command: string,
+  args: string[]
+) => {
+  const ls = spawn(command, args);
+  ls.stdout.on('data', (data) => {
+    event.reply(`${channel}-stdout`, `${data}`);
+  });
+
+  ls.stderr.on('data', (data) => {
+    event.reply(`${channel}-stderr`, `${data}`);
+  });
+
+  ls.on('error', (error) => {
+    event.reply(`${channel}-error`, error.message);
+  });
+
+  ls.on('close', (code) => {
+    event.reply(`${channel}-close`, code);
+  });
+};
+
 ipcMain.on('ipc-example', async (event, arg) => {
   const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;
   console.log(msgTemplate(arg));
   event.reply('ipc-example', msgTemplate('pong'));
+});
+
+ipcMain.on('aws-exec-s3-ls', async (event, arg) => {
+  execCommand(event, 'aws-exec-s3-ls', 'aws', ['s3', 'ls']);
 });
 
 if (process.env.NODE_ENV === 'production') {
