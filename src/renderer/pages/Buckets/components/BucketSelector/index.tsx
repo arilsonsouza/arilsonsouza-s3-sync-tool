@@ -13,18 +13,21 @@ export function BucketSelector({ onSelectBucket }: BucketSelectorProps) {
   function getBuckets() {
     setLoading(true);
     window.electron.ipcRenderer.on('s3-ls-stdout', (bucketInfo: string) => {
-      const [date, hour, name] = bucketInfo.split(' ');
-      const bucket: BucketType = {
-        name: name.replace('\n', ''),
-        dateModified: `${date} ${hour}`,
-      };
+      const loadedBuckets = bucketInfo
+        .split('\n')
+        .map((bucketString: string) => {
+          const [date, hour, name] = bucketString.split(' ');
+          const bucket: BucketType = {
+            name,
+            dateModified: `${date} ${hour}`,
+          };
+          return bucket;
+        });
 
-      setBuckets((state) => [...state, bucket]);
-    });
-
-    window.electron.ipcRenderer.on('s3-ls-close', () => {
+      setBuckets(loadedBuckets);
       setLoading(false);
     });
+
     window.electron.ipcRenderer.sendMessage('s3-ls', []);
   }
 
