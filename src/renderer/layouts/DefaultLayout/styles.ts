@@ -2,6 +2,10 @@ import styled from 'styled-components';
 
 export const LayoutContainer = styled.div`
   display: flex;
-  gap: 1rem;
   height: 100%;
+
+  main {
+    padding: 2rem;
+    width: 100%;
+  }
 `;

@@ -8,6 +8,12 @@ export const GlobalStyle = createGlobalStyle`
         outline: none;
     }
 
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+    }
+
     body {
         color: ${({ theme }) => theme.colors.white};
         background: ${({ theme }) => theme.backgrounds.lightest};      
