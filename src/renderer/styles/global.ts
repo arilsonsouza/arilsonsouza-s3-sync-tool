@@ -10,8 +10,12 @@ export const GlobalStyle = createGlobalStyle`
 
     body {
         color: ${({ theme }) => theme.colors.white};
-        background: transparent;        
+        background: ${({ theme }) => theme.backgrounds.lightest};      
         -webkit-font-smoothing: antialiased;
+    }
+
+    #root {
+        height: 100vh;
     }
 
     body, input, textarea, button {
@@ -22,6 +26,7 @@ export const GlobalStyle = createGlobalStyle`
 
     button {
         cursor: pointer;
+        border: none;
     }
 
     a {
