@@ -5,3 +5,9 @@ export const BucketsContainer = styled.div`
   flex-direction: column;
   gap: 1rem;
 `;
+
+export const SectionContainer = styled.section`
+  padding: 1rem;
+  background: ${({ theme }) => theme.backgrounds.lighter};
+  border-radius: 8px;
+`;

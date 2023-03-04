@@ -15,7 +15,7 @@ import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 
-const { spawn } = require('child_process');
+const { exec, spawn } = require('child_process');
 
 class AppUpdater {
   constructor() {
@@ -27,7 +27,7 @@ class AppUpdater {
 
 let mainWindow: BrowserWindow | null = null;
 
-const execCommand = (
+const execSpawnCommand = (
   event: IpcMainEvent,
   channel: string,
   command: string,
@@ -51,6 +51,20 @@ const execCommand = (
   });
 };
 
+const execCommand = (event: IpcMainEvent, channel: string, command: string) => {
+  exec(command, (error, stdout, stderr) => {
+    if (error) {
+      event.reply(`${channel}-error`, error.message);
+      return;
+    }
+    if (stderr) {
+      event.reply(`${channel}-stderr`, `${stderr}`.trim());
+      return;
+    }
+    event.reply(`${channel}-stdout`, `${stdout}`.trim());
+  });
+};
+
 ipcMain.on('ipc-example', async (event, arg) => {
   const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;
   console.log(msgTemplate(arg));
@@ -58,7 +72,15 @@ ipcMain.on('ipc-example', async (event, arg) => {
 });
 
 ipcMain.on('s3-ls', async (event, arg) => {
-  execCommand(event, 's3-ls', 'aws', ['s3', 'ls']);
+  execCommand(event, 's3-ls', 'aws s3 ls');
+});
+
+ipcMain.on('s3-bucket-stats', async (event, bucketName) => {
+  execCommand(
+    event,
+    's3-bucket-stats',
+    `aws s3 ls --summarize --human-readable --recursive s3://${bucketName} | tail -2`
+  );
 });
 
 if (process.env.NODE_ENV === 'production') {

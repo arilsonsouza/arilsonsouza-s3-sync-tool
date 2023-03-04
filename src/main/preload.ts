@@ -7,7 +7,9 @@ export type Channels =
   | 's3-ls'
   | 's3-ls-stdout'
   | 's3-ls-error'
-  | 's3-ls-close';
+  | 's3-bucket-stats'
+  | 's3-bucket-stats-stdout'
+  | 's3-bucket-stats-error';
 
 const electronHandler = {
   ipcRenderer: {
