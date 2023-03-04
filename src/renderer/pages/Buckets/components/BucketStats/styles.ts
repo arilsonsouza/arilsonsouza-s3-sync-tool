@@ -27,7 +27,7 @@ export const BucketInfoHeader = styled.div`
     justify-content: center;
     align-items: center;
     padding: 0.4rem;
-    border-radius: 8px;
+    border-radius: 4px;
     background: transparent;
     color: ${({ theme }) => theme.colors.purple};
     transition: all 0.2s;

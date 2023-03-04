@@ -9,5 +9,11 @@ export const BucketsContainer = styled.div`
 export const SectionContainer = styled.section`
   padding: 1rem;
   background: ${({ theme }) => theme.backgrounds.lighter};
-  border-radius: 8px;
+  border-radius: 4px;
+`;
+
+export const SyncFolderContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 `;
