@@ -71,7 +71,7 @@ export function BucketStats({ bucket }: BucketStatsProps) {
           </BucketInfoHeader>
           <BucketInfoContent>
             <BucketStatsItem>
-              <span>→</span>
+              <span>&#8594;</span>
               <strong>Total de Objetos: {selectedBucket.totalObjects}</strong>
             </BucketStatsItem>
             <BucketStatsItem>

@@ -1,9 +1,8 @@
-import { CloudArrowUp } from 'phosphor-react';
 import { useState } from 'react';
-import { Button } from 'renderer/components/Button';
 import { SelectFolder } from 'renderer/components/SelectFolder';
 import { BucketSelector } from './components/BucketSelector';
 import { BucketStats } from './components/BucketStats';
+import { BucketSync } from './components/BucketSync';
 import {
   BucketsContainer,
   SectionContainer,
@@ -38,13 +37,11 @@ export function Buckets() {
             text="Escolha a pasta de upload"
             onSelectFolder={onSelectFolder}
           />
-
-          <Button disabled={!selectedFolder.length}>
-            <CloudArrowUp size={32} /> Sincronizar
-          </Button>
         </SyncFolderContainer>
       </SectionContainer>
-      <SectionContainer>CONSOLE OUTPUT</SectionContainer>
+      <SectionContainer>
+        <BucketSync bucket={selectedBucket} selectedFolder={selectedFolder} />
+      </SectionContainer>
     </BucketsContainer>
   );
 }
