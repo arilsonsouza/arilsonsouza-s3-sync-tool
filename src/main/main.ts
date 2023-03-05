@@ -101,6 +101,10 @@ ipcMain.on('s3-bucket-stats', async (event, bucketName) => {
   );
 });
 
+ipcMain.on('s3-bucket-sync', async (event, syncArgs) => {
+  execSpawnCommand(event, 's3-bucket-sync', 'aws', syncArgs);
+});
+
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
   sourceMapSupport.install();

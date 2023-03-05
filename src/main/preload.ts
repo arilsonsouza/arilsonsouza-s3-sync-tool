@@ -10,6 +10,11 @@ export type Channels =
   | 's3-bucket-stats'
   | 's3-bucket-stats-stdout'
   | 's3-bucket-stats-error'
+  | 's3-bucket-sync'
+  | 's3-bucket-sync-stdout'
+  | 's3-bucket-sync-stderr'
+  | 's3-bucket-sync-close'
+  | 's3-bucket-sync-error'
   | 'dialog:openFolder';
 
 const electronHandler = {
