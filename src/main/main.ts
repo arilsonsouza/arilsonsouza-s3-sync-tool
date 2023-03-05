@@ -97,7 +97,7 @@ ipcMain.on('s3-bucket-stats', async (event, bucketName) => {
   execCommand(
     event,
     's3-bucket-stats',
-    `aws s3 ls --summarize --human-readable --recursive s3://${bucketName} | tail -2`
+    `aws s3 ls --summarize --human-readable --recursive s3://${bucketName}`
   );
 });
 
